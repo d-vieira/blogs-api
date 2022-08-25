@@ -1,12 +1,10 @@
 'use strict';
 
-const sequelize = require('sequelize');
-
 module.exports = {
-/**
-  * @param {import('sequelize').QueryInterface} queryInterface
-  * @param {import('sequelize').Sequelize } Sequelize
-*/
+  /**
+    * @param {import('sequelize').QueryInterface} queryInterface
+    * @param {import('sequelize').Sequelize } Sequelize
+  */
 
   up: async (queryInterface, Sequelize) => {
     /**
@@ -37,7 +35,7 @@ module.exports = {
       image: {
         allowNull: true,
         type: Sequelize.STRING
-      }
+      },
     });
   },
 
@@ -49,5 +47,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable('Users');
-  }
+  },
 };
