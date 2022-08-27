@@ -8,7 +8,7 @@ const auth = (req, res, next) => {
     req.userId = data.id;
     next();
   } catch (error) {
-    res.status(401).json({ message: error.message });
+    res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
