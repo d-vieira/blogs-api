@@ -16,7 +16,14 @@ const register = async ({ displayName, email, password, image }) => {
   return { code: 201, data };
 };
 
+const findAll = async () => {
+  const data = await User.findAll({ attributes: { exclude: ['password'] } });
+  if (!data.length) return { code: 404, message: 'Not Found' };
+  return { code: 200, data };
+};
+
 module.exports = {
   login,
   register,
+  findAll,
 };

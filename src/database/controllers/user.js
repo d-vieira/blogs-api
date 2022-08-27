@@ -19,7 +19,14 @@ const register = async (req, res) => {
   return res.status(code).json({ token: data });
 };
 
+const findAll = async (req, res) => {
+  const { data, code, message } = await userService.findAll();
+  if (!data) return res.status(code).json({ message });
+  return res.status(code).json(data);
+};
+
 module.exports = { 
   login,
   register,
+  findAll,
 };
