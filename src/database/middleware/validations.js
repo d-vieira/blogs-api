@@ -11,6 +11,27 @@ const login = (req, res, next) => {
   next();
 };
 
+const registerSchema = joi.object({
+  displayName: joi.string().min(8).required().messages({ 
+    'any.required': '"displayName" length must be at least 8 characters long',
+  }),
+  email: joi.string().email().required().messages({
+    'any.required': '"email" must be a valid email',
+  }),
+  password: joi.string().min(6).required().messages({
+    'any.required': '"password" length must be at least 6 characters long',
+  }),
+  image: joi.string(),
+});
+
+const register = (req, res, next) => {
+  const validation = registerSchema.validate(req.body);
+  const { error } = validation;
+  if (error) return res.status(400).json({ message: error.details[0].message });
+  next();
+};
+
 module.exports = {
   login,
+  register,
 };

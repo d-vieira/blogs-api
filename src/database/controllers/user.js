@@ -7,6 +7,19 @@ const login = async (req, res) => {
   return res.status(code).json({ token: data });
 };
 
+const register = async (req, res) => {
+  const { displayName, email, password, image } = req.body;
+  const { data, code, message } = await userService.register({
+    displayName,
+    email,
+    password,
+    image,
+  });
+  if (!data) return res.status(code).json({ message });
+  return res.status(code).json({ token: data });
+};
+
 module.exports = { 
   login,
+  register,
 };
