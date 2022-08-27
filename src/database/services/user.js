@@ -22,8 +22,18 @@ const findAll = async () => {
   return { code: 200, data };
 };
 
+const findOne = async (id) => {
+  const data = await User.findOne({
+    where: { id },
+    attributes: { exclude: ['password'] },
+  });
+  if (!data) return { code: 404, message: 'User does not exist' };
+  return { code: 200, data };
+};
+
 module.exports = {
   login,
   register,
   findAll,
+  findOne,
 };
