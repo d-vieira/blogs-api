@@ -31,7 +31,18 @@ const register = (req, res, next) => {
   next();
 };
 
+const categorySchema = joi.object({
+  name: joi.string().required(),
+});
+
+const category = (req, res, next) => {
+  const { error } = categorySchema.validate(req.body);
+  if (error) return res.status(400).json({ message: '"name" is required' });
+  next();
+};
+
 module.exports = {
   login,
   register,
+  category,
 };
