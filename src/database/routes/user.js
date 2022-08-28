@@ -8,6 +8,7 @@ const userRouter = Router();
 
 userRouter.post('/', validate.register, rescue(userController.register));
 userRouter.get('/', auth, rescue(userController.findAll));
+userRouter.delete('/me', auth, rescue(userController.destroy));
 userRouter.get('/:id', auth, rescue(userController.findOne));
 
 module.exports = userRouter;
