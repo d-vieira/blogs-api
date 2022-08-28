@@ -13,5 +13,6 @@ app.get('/', (_request, response) => {
 app.use('/user', routes.userRouter);
 app.use('/login', routes.loginRouter);
 app.use('/categories', routes.categoryRouter);
+app.use('/post', routes.postRouter);
 
 app.listen(port, () => console.log('ouvindo porta', port));
