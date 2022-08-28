@@ -23,6 +23,7 @@ const findAll = async () => {
 };
 
 const findOne = async (id) => {
+  // const data = await User.findByPk(id, { attributes: { exclude: ['password'] } });
   const data = await User.findOne({
     where: { id },
     attributes: { exclude: ['password'] },

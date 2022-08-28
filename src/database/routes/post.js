@@ -6,5 +6,6 @@ const rescue = require('../middleware/rescue');
 const postRouter = Router();
 
 postRouter.get('/', auth, rescue(postController.findAll));
+postRouter.get('/:id', auth, rescue(postController.findByPk));
 
 module.exports = postRouter;
