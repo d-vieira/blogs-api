@@ -8,6 +8,7 @@ const postRouter = Router();
 
 postRouter.post('/', auth, validate.post, rescue(postController.create));
 postRouter.get('/', auth, rescue(postController.findAll));
+postRouter.put('/:id', auth, validate.updatePost, rescue(postController.update));
 postRouter.get('/:id', auth, rescue(postController.findByPk));
 
 module.exports = postRouter;

@@ -53,9 +53,21 @@ const post = (req, res, next) => {
   next();
 };
 
+const updatePostSchema = joi.object({
+  title: joi.string(),
+  content: joi.string(),
+}).required();
+
+const updatePost = (req, res, next) => {
+  const { error } = updatePostSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: 'Some required fields are missing' });
+  next();
+};
+
 module.exports = {
   login,
   register,
   category,
   post,
+  updatePost,
 };

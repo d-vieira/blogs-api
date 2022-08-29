@@ -27,8 +27,18 @@ const create = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const update = async (req, res) => {
+  const { authorization } = req.headers;
+  const { title, content } = req.body;
+  const { id } = jwtHelpers.verifyToken(authorization);
+  const { code, data, message } = await postService.update(req.params.id, { title, content, id });
+  if (!data) return res.status(code).json({ message });
+  return res.status(code).json(data);
+};
+
 module.exports = {
   findAll,
   findByPk,
   create,
+  update,
 };

@@ -56,8 +56,22 @@ const create = async ({ userId, title, content, categoryIds }) => {
   return { code: 201, data };
 };
 
+const update = async (post, { title, content, id }) => {
+  const validUser = await User.findByPk(id);
+  const validPost = await BlogPost.findByPk(post);
+  if (validUser.dataValues.id !== validPost.dataValues.id) {
+    return { code: 401, message: 'Unauthorized user' };
+  }
+  await BlogPost.update({ title, content }, {
+    where: { id: post },
+  });
+  const { data: { dataValues } } = await findByPk(post);
+  return { code: 200, data: dataValues };
+};
+
 module.exports = {
   findAll,
   findByPk,
   create,
+  update,
 };
