@@ -36,9 +36,18 @@ const update = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const destroy = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = jwtHelpers.verifyToken(authorization);
+  const { code, message } = await postService.destroy(req.params.id, id);
+  if (message) return res.status(code).json({ message });
+  return res.status(code).end();
+};
+
 module.exports = {
   findAll,
   findByPk,
   create,
   update,
+  destroy,
 };

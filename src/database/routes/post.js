@@ -10,5 +10,6 @@ postRouter.post('/', auth, validate.post, rescue(postController.create));
 postRouter.get('/', auth, rescue(postController.findAll));
 postRouter.put('/:id', auth, validate.updatePost, rescue(postController.update));
 postRouter.get('/:id', auth, rescue(postController.findByPk));
+postRouter.delete('/:id', auth, rescue(postController.destroy));
 
 module.exports = postRouter;

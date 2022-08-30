@@ -69,9 +69,20 @@ const update = async (post, { title, content, id }) => {
   return { code: 200, data: dataValues };
 };
 
+const destroy = async (postId, authId) => {
+  const validPost = await findByPk(postId);
+  if (validPost.message) return { code: 404, message: 'Post does not exist' };
+  if (validPost.data.dataValues.userId !== authId) {
+    return { code: 401, message: 'Unauthorized user' };
+  }
+  await BlogPost.destroy({ where: { id: postId } });
+  return { code: 204 };
+};
+
 module.exports = {
   findAll,
   findByPk,
   create,
   update,
+  destroy,
 };
