@@ -16,9 +16,9 @@ const findByPk = async (req, res) => {
 const create = async (req, res) => {
   const { authorization } = req.headers;
   const { title, content, categoryIds } = req.body;
-  const { userId } = jwtHelpers.verifyToken(authorization);
+  const { id } = jwtHelpers.verifyToken(authorization);
   const { code, data, message } = await postService.create({
-    userId,
+    id,
     title,
     content,
     categoryIds,

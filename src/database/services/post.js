@@ -41,12 +41,12 @@ const findByPk = async (id) => {
   return { code: 200, data };
 };
 
-const create = async ({ userId, title, content, categoryIds }) => {
+const create = async ({ id, title, content, categoryIds }) => {
   const exist = await Category.findOne({ where: { id: categoryIds } });
   if (!exist) return { code: 400, message: '"categoryIds" not found' };
   const data = await sequelize.transaction(async (t) => {
     const post = await BlogPost.create({
-      title, content, userId,
+      title, content, userId: id,
       }, { transaction: t });
     const categories = categoryIds.map((category) => ({
       postId: post.dataValues.id, categoryId: category,
@@ -73,6 +73,7 @@ const update = async (post, { title, content, id }) => {
 const destroy = async (postId, authId) => {
   const validPost = await findByPk(postId);
   if (validPost.message) return { code: 404, message: 'Post does not exist' };
+  console.log('>>>>>>>>>>>>>:', authId, validPost.data.dataValues.userId);
   if (validPost.data.dataValues.userId !== authId) {
     return { code: 401, message: 'Unauthorized user' };
   }
