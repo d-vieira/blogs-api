@@ -58,11 +58,10 @@ const create = async ({ id, title, content, categoryIds }) => {
 };
 
 const update = async (post, { title, content, id }) => {
-  const validUser = await User.findByPk(id);
-  const validPost = await BlogPost.findByPk(post);
-  if (validUser.dataValues.id !== validPost.dataValues.id) {
-    return { code: 401, message: 'Unauthorized user' };
-  }
+  const valid = await BlogPost.findOne({
+    where: { [Op.and]: [{ id: post }, { userId: id }] },
+  });
+  if (!valid) return { code: 401, message: 'Unauthorized user' };
   await BlogPost.update({ title, content }, {
     where: { id: post },
   });
