@@ -65,17 +65,18 @@ const update = async (post, { title, content, id }) => {
   await BlogPost.update({ title, content }, {
     where: { id: post },
   });
+
   const { data: { dataValues } } = await findByPk(post);
   return { code: 200, data: dataValues };
 };
 
-const destroy = async (postId, authId) => {
-  const validPost = await findByPk(postId);
-  if (validPost.message) return { code: 404, message: 'Post does not exist' };
-  console.log('>>>>>>>>>>>>>:', authId, validPost.data.dataValues.userId);
-  if (validPost.data.dataValues.userId !== authId) {
-    return { code: 401, message: 'Unauthorized user' };
-  }
+const destroy = async (postId, userId) => {
+  const exist = await BlogPost.findByPk(postId);
+  if (!exist) return { code: 404, message: 'Post does not exist' };
+  const valid = await BlogPost.findOne({
+    where: { [Op.and]: [{ id: postId }, { userId }] },
+  });
+  if (!valid) return { code: 401, message: 'Unauthorized user' };
   await BlogPost.destroy({ where: { id: postId } });
   return { code: 204 };
 };
