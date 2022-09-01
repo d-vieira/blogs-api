@@ -1,5 +1,4 @@
 const userService = require('../services/user');
-const jwtHelpers = require('../helpers/jwt');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -33,8 +32,7 @@ const findOne = async (req, res) => {
 };
 
 const destroy = async (req, res) => {
-  const { authorization } = req.headers;
-  const { id } = jwtHelpers.verifyToken(authorization);
+  const id = req.userId;
   const { code } = await userService.destroy(id);
   return res.status(code).end();
 };
